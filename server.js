@@ -10,11 +10,12 @@ app.use(cors());
 app.use(bodyParser.json());
 
 // ✅ Create MySQL Connection
-const db = mysql.createConnection({
-    host: "localhost",
+onst db = mysql.createConnection({
+    host: "interchange.proxy.rlwy.net",
     user: "root",
-    password: "root",
-    database: "parking_management"
+    password: "gNWNTJwXgWzbYirFGhuwbLDdkbEWGWTN",
+    database: "railway",
+    port: 42957
 });
 
 // ✅ Connect to Database
