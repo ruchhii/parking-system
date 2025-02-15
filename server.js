@@ -12,11 +12,12 @@ app.use(bodyParser.json());
 // ✅ Create MySQL Connection
 const db = mysql.createConnection({
     host: "interchange.proxy.rlwy.net",
-    user: "root",
-    password: "gNWNTJwXgWzbYirFGhuwbLDdkbEWGWTN",
+    user: process.env.DB_USER, // Use environment variable
+    password: process.env.DB_PASSWORD, // Use environment variable
     database: "railway",
-    port: 42957
+    port: 42957 // Keep this as is, unless you want to make it dynamic
 });
+
 
 // ✅ Connect to Database
 db.connect(err => {
@@ -191,5 +192,5 @@ app.delete("/api/bookings/:id", authenticateUser, (req, res) => {
 });
 
 // ✅ START SERVER
-const PORT = 4000;
+const PORT = process.env.PORT || 3000; // Use PORT from .env or fallback to 3000
 app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
