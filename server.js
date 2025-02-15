@@ -10,7 +10,7 @@ app.use(cors());
 app.use(bodyParser.json());
 
 // ✅ Create MySQL Connection
-onst db = mysql.createConnection({
+const db = mysql.createConnection({
     host: "interchange.proxy.rlwy.net",
     user: "root",
     password: "gNWNTJwXgWzbYirFGhuwbLDdkbEWGWTN",
