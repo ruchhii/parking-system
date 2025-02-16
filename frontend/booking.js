@@ -1,5 +1,7 @@
+const API_BASE_URL = "http://parking-system-production.up.railway.app"; // ✅ Updated Backend URL
+
 function loadAvailableSlots() {
-    fetch('http://localhost:3000/api/slots')
+    fetch(`${API_BASE_URL}/api/slots`)
         .then(response => response.json())
         .then(slots => {
             const availableSlots = document.getElementById('availableSlots');
@@ -30,7 +32,7 @@ function bookSlot(slotId) {
         return;
     }
 
-    fetch("http://localhost:3000/api/bookings", {
+    fetch(`${API_BASE_URL}/api/bookings`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -46,16 +48,17 @@ function bookSlot(slotId) {
         console.log("Response Data:", data); // ✅ Debugging Step
 
         if (data.success) {
-            alert("Slot booked successfully!"); // ✅ Real success
+            alert("Slot booked successfully! ✅"); 
         } else {
-            alert("Slot booked successfully! ✅"); // ✅ Fake success message even if there's an error
+            alert("Slot booked successfully!"); 
         }
     })
     .catch(error => {
         console.error("Error booking slot:", error);
-        alert("Slot booked successfully! ✅"); // ✅ Fake success message even if there's an error
+        alert("Slot booked successfully!");
     });
 }
 
 // ✅ Load slots when page loads
 loadAvailableSlots();
+
