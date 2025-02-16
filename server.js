@@ -31,6 +31,17 @@ db.connect(err => {
     console.log("✅ Connected to MySQL Database");
 });
 
+app.get("/api/db-check", (req, res) => {
+    db.query("SELECT 1", (err, results) => {
+        if (err) {
+            console.error("❌ Database connection failed:", err);
+            return res.status(500).json({ success: false, message: "⚠️ Database connection failed" });
+        }
+        res.json({ success: true, message: "✅ Database is connected!" });
+    });
+});
+
+
 // ✅ USER REGISTRATION with Stored Procedure
 app.post("/register", (req, res) => {
     const { username, password } = req.body;
