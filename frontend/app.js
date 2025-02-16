@@ -1,5 +1,5 @@
-document.addEventListener("DOMContentLoaded", () => {
-    const API_BASE_URL = "http://parking-system-production.up.railway.app"; // ✅ Updated Backend URL
+document.addEventListener("DOMContentLoaded", () => { 
+    const API_BASE_URL = process.env.REACT_APP_API_URL || "https://parking-system.up.railway.app"; // ✅ Use env variable or fallback
 
     const loginSection = document.getElementById("loginSection");
     const registerSection = document.getElementById("registerSection");
