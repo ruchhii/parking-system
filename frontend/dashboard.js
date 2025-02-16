@@ -1,7 +1,8 @@
-const API_BASE_URL = "http://parking-system-production.up.railway.app"; // ✅ Updated Backend URL
+const API_BASE_URL = process.env.REACT_APP_API_URL || "https://parking-system.up.railway.app"; // ✅ Dynamic API URL
 
 document.addEventListener('DOMContentLoaded', () => {
     fetchAvailableSlots();
+    setupUserInterface();
 });
 
 function fetchAvailableSlots() {
@@ -10,6 +11,7 @@ function fetchAvailableSlots() {
         .then(slots => {
             const availableSlots = document.getElementById('availableSlots');
             availableSlots.innerHTML = '';
+
             slots.forEach(slot => {
                 if (slot.is_available) {
                     const slotDiv = document.createElement('div');
@@ -19,11 +21,21 @@ function fetchAvailableSlots() {
                     availableSlots.appendChild(slotDiv);
                 }
             });
+        })
+        .catch(error => {
+            console.error("❌ Error fetching slots:", error);
+            alert("⚠️ Error loading available slots. Please try again later.");
         });
 }
 
 function bookSlot(slotId) {
     const userId = localStorage.getItem('user_id');
+
+    if (!userId) {
+        alert("⚠️ Please log in to book a slot.");
+        window.location.href = "index.html";
+        return;
+    }
 
     fetch(`${API_BASE_URL}/api/book`, {
         method: 'POST',
@@ -32,12 +44,20 @@ function bookSlot(slotId) {
     })
     .then(response => response.json())
     .then(data => {
-        alert(data.message);
-        fetchAvailableSlots();
+        if (data.success) {
+            alert("✅ Slot booked successfully!");
+            fetchAvailableSlots(); // ✅ Refresh slot availability
+        } else {
+            alert("❌ Error: " + (data.message || "Failed to book slot."));
+        }
+    })
+    .catch(error => {
+        console.error("❌ Error booking slot:", error);
+        alert("⚠️ An error occurred while booking. Please try again.");
     });
 }
 
-document.addEventListener('DOMContentLoaded', () => {
+function setupUserInterface() {
     const username = localStorage.getItem('username');
     document.getElementById('username').textContent = username || 'User';
 
@@ -51,4 +71,4 @@ document.addEventListener('DOMContentLoaded', () => {
         localStorage.clear();
         window.location.href = 'index.html';
     });
-});
+}
