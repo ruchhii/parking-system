@@ -1,4 +1,4 @@
-const API_BASE_URL = "http://parking-system-production.up.railway.app"; // ✅ Updated Backend URL
+const API_BASE_URL = process.env.REACT_APP_API_URL || "https://parking-system.up.railway.app"; // ✅ Dynamic API URL
 
 function loadAvailableSlots() {
     fetch(`${API_BASE_URL}/api/slots`)
@@ -18,8 +18,8 @@ function loadAvailableSlots() {
             });
         })
         .catch(error => {
-            console.error('Error fetching slots:', error);
-            alert('Error loading available slots. Please try again later.');
+            console.error('❌ Error fetching slots:', error);
+            alert('⚠️ Error loading available slots. Please try again later.');
         });
 }
 
@@ -27,7 +27,7 @@ function bookSlot(slotId) {
     const token = localStorage.getItem("token");
 
     if (!token) {
-        alert("Slot Booked Successfully!");
+        alert("⚠️ Please log in to book a slot.");
         window.location.href = "index.html";
         return;
     }
@@ -48,17 +48,17 @@ function bookSlot(slotId) {
         console.log("Response Data:", data); // ✅ Debugging Step
 
         if (data.success) {
-            alert("Slot booked successfully! ✅"); 
+            alert("✅ Slot booked successfully!"); 
+            loadAvailableSlots(); // ✅ Refresh available slots after booking
         } else {
-            alert("Slot booked successfully!"); 
+            alert("❌ Error: " + (data.message || "Failed to book slot."));
         }
     })
     .catch(error => {
-        console.error("Error booking slot:", error);
-        alert("Slot booked successfully!");
+        console.error("❌ Error booking slot:", error);
+        alert("⚠️ An error occurred while booking the slot. Please try again.");
     });
 }
 
 // ✅ Load slots when page loads
-loadAvailableSlots();
-
+document.addEventListener("DOMContentLoaded", loadAvailableSlots);
