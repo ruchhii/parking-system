@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const API_BASE_URL = "http://parking-system-production.up.railway.app"; // ✅ Updated Backend URL
+    const API_BASE_URL = process.env.REACT_APP_API_URL || "https://parking-system.up.railway.app"; // ✅ Set from environment variable
 
     fetchSlots();
 
@@ -46,7 +46,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 async function fetchSlots() {
     try {
-        const response = await fetch("http://parking-system-production.up.railway.app/api/slots");
+        const response = await fetch(`${process.env.REACT_APP_API_URL || "https://parking-system.up.railway.app"}/api/slots`);
         const slots = await response.json();
 
         const tableBody = document.getElementById("slotsTable");
@@ -65,4 +65,4 @@ async function fetchSlots() {
         console.error("❌ Error fetching slots:", error);
         alert("⚠️ An error occurred while fetching the parking slots.");
     }
-} 
+}
