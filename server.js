@@ -10,7 +10,6 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
-app.use(express.static(path.join(__dirname, "frontend")));
 
 // ✅ Create MySQL Connection
 const db = mysql.createConnection({
