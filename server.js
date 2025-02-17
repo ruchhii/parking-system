@@ -14,10 +14,10 @@ app.use(bodyParser.json());
 // ✅ Create MySQL Connection
 const db = mysql.createConnection({
     host: "interchange.proxy.rlwy.net",
-    user: process.env.DB_USER, // Use environment variable
-    password: process.env.DB_PASSWORD, // Use environment variable
+    user: "root",
+    password: "gNWNTJwXgWzbYirFGhuwbLDdkbEWGWTN",
     database: "railway",
-    port: 42957 // Keep this as is, unless you want to make it dynamic
+    port: 42957
 });
 
 
